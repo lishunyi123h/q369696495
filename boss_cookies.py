@@ -62,7 +62,7 @@ function encryption(seed, ts) {
             "user-agent": f"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/{random.randint(1, 999)}.36 (KHTML, like Gecko) Chrome/81.0.4044.129 Safari/537.36",
         }
         url = f"https://www.zhipin.com/job_detail/"
-        response = requests.get(url, headers=headers)
+        response = requests.get(url, headers=headers, )
         self.cookies_generate(response)
 
     def cookies_generate(self, response):
@@ -70,8 +70,9 @@ function encryption(seed, ts) {
         query_dict = {i.split("=")[0]: i.split("=")[1] for i in query_str.split("&")}
         js_name = query_dict.get("name")
         js_url = f"https://www.zhipin.com/web/common/security-js/{js_name}.js"
-        js_res = requests.get(js_url)
+        js_res = requests.get(js_url, )
         js_text = js_res.text
+        js_text = js_text.replace("typeof process", "typeof child_process")
         seed = parse.unquote(query_dict.get("seed"))
         ts = query_dict.get("ts")
         new_js_text = self.core + js_text
@@ -81,8 +82,8 @@ function encryption(seed, ts) {
             "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36",
             "cookie": f"__zp_stoken__={code};"
         }
-        url = "https://www.zhipin.com/c100010000-p110101/?page=2&ka=page-2"
-        response = requests.get(url, headers=headers)
+        url = "https://www.zhipin.com/c101280600-p100120/"
+        response = requests.get(url, headers=headers, )
         print(response.text)
         pass
 
